@@ -1,8 +1,8 @@
-package com.cloud.centralized_error_handler.processor;
+package com.cloud.centralized_error_handler.processor.callback;
 
 import com.cloud.centralized_error_handler.ErrorProcessorService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import response.ApiError;
@@ -10,14 +10,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-@Primary
-public class RestProcessorService implements ErrorProcessorService {
+@Profile("error-endpoint")
+public class CallbackProcessorService implements ErrorProcessorService {
 
     private final RestTemplate restTemplate;
     private final String endpointUrl;
-    private static final Logger logger = LoggerFactory.getLogger(RestProcessorService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CallbackProcessorService.class);
 
-    public RestProcessorService(RestTemplate restTemplate, @Value("${error.rest.endpoint.url:http://localhost:8081/errors}") String endpointUrl) {
+    public CallbackProcessorService(RestTemplate restTemplate,
+                                    @Value("${error.rest.endpoint.url:http://localhost:8081/errors}") String endpointUrl) {
         this.restTemplate = restTemplate;
         this.endpointUrl = endpointUrl;
     }
@@ -26,8 +27,9 @@ public class RestProcessorService implements ErrorProcessorService {
     public void process(ApiError apiError) {
         try {
             restTemplate.postForEntity(endpointUrl, apiError, Void.class);
+            logger.info("Error successfully sent to endpoint: {}", endpointUrl);
         } catch (Exception e) {
-            logger.error("Error at send the request", e);
+            logger.error("Failed to send to endpoint {} the error:", endpointUrl, e);
         }
     }
 }
