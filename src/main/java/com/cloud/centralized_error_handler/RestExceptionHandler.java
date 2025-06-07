@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import response.ApiError;
 import response.Response;
+
 import java.io.IOException;
 
 @ControllerAdvice
@@ -19,11 +20,11 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(IOException.class)
     public ResponseEntity<Response> handleIOExistException(IOException ex) {
-        ApiError apiError = new ApiError.Builder()
-                .setMessage(ex.getMessage())
-                .setException(ex)
-                .setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .build();
+        ApiError apiError = new ApiError(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                ex.getMessage(),
+                ex.getLocalizedMessage(),
+                null);
 
         errorProcessorService.process(apiError);
         return buildResponseEntity(apiError);
@@ -31,12 +32,12 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response> handleGenericException(Exception ex) {
-        ApiError apiError = new ApiError.Builder()
-                .setMessage(ex.getMessage())
-                .setException(ex)
-                .setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .build();
-
+        ApiError apiError = new ApiError(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                ex.getMessage(),
+                ex.getLocalizedMessage(),
+                null
+        );
         errorProcessorService.process(apiError);
         return buildResponseEntity(apiError);
     }
