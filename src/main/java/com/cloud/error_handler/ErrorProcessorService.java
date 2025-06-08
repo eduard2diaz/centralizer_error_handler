@@ -1,4 +1,4 @@
-package com.cloud.centralized_error_handler;
+package com.cloud.error_handler;
 
 import response.ApiError;
 

@@ -1,4 +1,4 @@
-package com.cloud.centralized_error_handler.processor.callback;
+package com.cloud.error_handler.processor.callback;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

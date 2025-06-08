@@ -1,4 +1,4 @@
-package com.cloud.centralized_error_handler;
+package com.cloud.error_handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import response.ApiError;
 import response.Response;
-
 import java.io.IOException;
 
 @ControllerAdvice
@@ -27,7 +26,7 @@ public class RestExceptionHandler {
                 null);
 
         errorProcessorService.process(apiError);
-        return buildResponseEntity(apiError);
+        return new ResponseEntity<>(Response.fail(apiError), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
@@ -39,10 +38,6 @@ public class RestExceptionHandler {
                 null
         );
         errorProcessorService.process(apiError);
-        return buildResponseEntity(apiError);
-    }
-
-    private ResponseEntity<Response> buildResponseEntity(ApiError apiError) {
         return new ResponseEntity<>(Response.fail(apiError), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

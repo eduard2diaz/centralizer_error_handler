@@ -1,7 +1,6 @@
-package com.cloud.centralized_error_handler.processor.kafka;
+package com.cloud.error_handler.processor.kafka;
 
-import com.cloud.centralized_error_handler.ErrorProcessorService;
-import com.cloud.centralized_error_handler.processor.callback.CallbackProcessorService;
+import com.cloud.error_handler.ErrorProcessorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
-package com.cloud.centralized_error_handler.processor.callback;
+package com.cloud.error_handler.processor.callback;
 
-import com.cloud.centralized_error_handler.ErrorProcessorService;
+import com.cloud.error_handler.ErrorProcessorService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;

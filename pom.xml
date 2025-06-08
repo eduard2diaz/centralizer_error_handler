@@ -9,10 +9,10 @@
         <relativePath/>
     </parent>
     <groupId>com.cloud</groupId>
-    <artifactId>centralized_error_handler</artifactId>
-    <version>1.0.0-dev1</version>
-    <name>centralized_error_handler</name>
-    <description>centralized_error_handler</description>
+    <artifactId>error_handler</artifactId>
+    <version>1.0.0-alpha</version>
+    <name>error_handler</name>
+    <description>Library for capturing and forwarding errors in a centralized and configurable way.</description>
     <properties>
         <java.version>21</java.version>
     </properties>
@@ -20,7 +20,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/eduard2diaz/centralizer_error_handler</url>
+            <url>https://maven.pkg.github.com/eduard2diaz/error_handler</url>
         </repository>
     </distributionManagement>
     <dependencies>
@@ -39,6 +39,7 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
